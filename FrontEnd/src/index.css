@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  --main-color: #1F1D2A;
+  --second-color: #37364E;
+  --third-color: #2B283C;
+  --blue-color: #4363D1;
+  --gray-color: #C0C0C0;
+  --white-color: #D9D9D9;
+}
+
+body {
+  background-color: var(--main-color);
+  position: relative;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.center {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  padding: 40px;
+  background-color: var(--third-color);
+  max-width: 500px;
+  border-radius: 20px;
+  margin: 15px;
+
+}
+
+.container h1 {
+  font-weight: 600;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+.field label {
+  color: var(--second-color);
+  margin-bottom: 5px;
+}
+
+.field input,
+button {
+  width: 100%;
+  padding: 17px;
+  border-radius: 50px;
+  background-color: var(--second-color);
+  border: 1px solid #3d3c5c;
+}
+
+.field label span {
+  color: var(--third-color);
+}
+
+.field label:not(:last-child) {
+  display: block;
+}
+
+.field button {
+  background-color: var(--blue-color);
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.redirect {
+  padding: 5px;
+  margin-top: 10px;
+  color: white;
+  font-weight: 700;
+}
+
+.redirect span {
+  color: var(--blue-color);
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+
+.checkbox {
+  margin-top: 20px;
+}
+
+.checkbox input {
+  margin-right: 10px;
+}
+
+input {
+  color: white;
+}
+
+.valid {
+  font-size: 18px;
+  color: green;
+  margin-bottom: -2px;
+  margin-left: 10px;
+}
+
+.invalid {
+  font-size: 17px;
+  color: red;
+  margin-bottom: -2px;
+  margin-left: 10px;
+}
+
+.hide {
+  display: none;
+}
+
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #291e33;
+  color: #fff;
+  padding: 10px 5px;
+  position: relative;
+  bottom: -10px;
+  margin-bottom: 20px;
+}
+
+.instructions li {
+  list-style: none;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
+form {
+  position: relative;
+}
+
+.showPassbtn,
+.showConfirmPassbtn {
+  position: absolute;
+  right: 20px;
+  top: 210px;
+  z-index: 100;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+}
+
+.showConfirmPassbtn {
+  top: 294px;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.links a {
+  position: relative;
+  bottom: -8px;
+  text-decoration: none;
+  color: var(--blue-color);
+}
+
+.search {
+  display: flex;
+  padding: 25px;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  background-color: var(--second-color);
+  gap: 20px;
+  border-radius: 15px;
+}
+
+.addAndSortContacts {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+}
+
+.addAndSortContacts a {
+  color: var(--second-color);
+  background-color: var(--white-color);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.searchBar {
+  flex: 1;
+  margin: auto;
+  position: relative;
+
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 15px;
+  border: none;
+  background-color: var(--blue-color);
+
+}
+
+.searchBar input::placeholder {
+  color: var(--white-color);
+  font-size: 16px;
+  padding-left: 15px;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+
+.AddNewContainer {
+  background-color: var(--white-color);
+  padding: 40px;
+  border-radius: 15px;
+  width: 400px;
+}
+
+.AddNewContainer form input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  margin-top: 10px;
+  background-color: var(--gray-color);
+}
+
+.AddNewContainer form input {
+  color: var(--main-color);
+}
+
+.AddNewContainer form button {
+  margin-top: 20px;
+  font-size: 18px;
+  color: var(--white-color);
+  cursor: pointer;
+}

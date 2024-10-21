@@ -1,0 +1,111 @@
+.contactsPage {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: grid;
+    place-content: center;
+}
+
+.userInfo {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    background-color: var(--third-color);
+    border-radius: 15px;
+    width: 200px;
+    height: fit-content;
+    transition:  5 ease-in-out;
+}
+
+.userInfo .userName {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    align-items: center;
+    background-color: var(--second-color);
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.userInfo .userName .avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    background-color: var(--white-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+}
+
+.userInfo .userName h3  {
+    color: var(--white-color);
+    font-family:monospace;
+}
+
+.userInfo .userSettingOptions{
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    transition: all 5s ease-in-out;
+    
+}
+.closeSettings{
+    display: none;
+}
+.userInfo .userSettingOptions li{
+    margin-bottom: 10px;
+}
+.userInfo .userSettingOptions li a{
+    color: var(--second-color);
+}
+.userInfo .userSettingOptions li:hover a{
+    color: var(--blue-color)
+}
+
+
+
+
+.contactsList{
+    margin-top: 50px;
+}
+
+.contact-info{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--second-color);
+    border-radius: 15px;
+}
+.contact-info:hover{
+    background-color: var(--blue-color);
+}
+.contact-info:hover  h4{
+    color: var(--second-color);
+}
+.contact-info h4{
+    margin-bottom: 10px;
+    color: var(--blue-color);
+    cursor: pointer;
+
+}
+.contact-info h4:hover{
+    color: var(--white-color);
+}
+.contact-info .info .name{
+    color: white;
+}
+
+.contact-info .buttons{
+    display: flex;
+    gap: 10px;   
+    font-size: 35px;
+    cursor: pointer;
+    color: var(--third-color);
+}
+.contact-info .buttons .icon:hover{
+    color: var(--white-color);
+}
