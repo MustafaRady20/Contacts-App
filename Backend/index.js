@@ -1,24 +1,33 @@
 require('dotenv').config();
 const express = require("express")
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dbConection = require("./config/db");
-const { ApiError } = require('./utils/apiError');
+const  ApiError  = require('./utils/apiError');
 const errorHandler = require('./middelwares/errorHandler');
 const authRoute = require("./routes/authRoute")
 const usersRoutes = require("./routes/usersRoute")
 const app = express()
 
-// Connect TO Database
-dbConection()
 
-// Parse Data to json
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
-app.use(cookieParser())
-
+const corsOptions = {
+    origin: 'http://localhost:3000',  
+    credentials: true                 
+  };
+  
+  
+  // Connect TO Database
+  dbConection()
+  
+  // Parse Data to json
+  app.use(express.urlencoded({ extended: false }))
+  app.use(express.json())
+  app.use(cookieParser())
+  app.use(cors(corsOptions));
+  
 // routing
 app.use("/auth", authRoute)
-app.use("/users",usersRoutes)
+app.use("/",usersRoutes)
 
 // Handle unexpected routes
 app.use("*", (req, res, next) => {

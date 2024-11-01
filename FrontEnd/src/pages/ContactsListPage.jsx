@@ -1,52 +1,64 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
 import { IoPersonAddSharp } from "react-icons/io5";
-import { FaSortAmountUp } from "react-icons/fa";
+import { FaSortAmountUp, FaTrashAlt, FaEdit } from "react-icons/fa";
 import { MdPersonSearch } from "react-icons/md";
-import { FaTrashAlt } from "react-icons/fa";
-import { FaEdit } from "react-icons/fa";
 
-
-
-import "./contactspage.css"
+import "./contactspage.css";
 import Modal from "../components/Modal";
-import { openModal } from '../store/modal'
-const contacts = [
-    {
-        id: 1,
-        name: "Youssef Khaled",
-        email: "khaldy002@gmail.com",
-        phoneNum: "+90 501 317 9633"
-    },
-    {
-        id: 2,
-        name: "Youssef Khaled",
-        email: "khaldy002@gmail.com",
-        phoneNum: "+90 501 317 9633"
-    },
-    {
-        id: 3,
-        name: "Youssef Khaled",
-        email: "khaldy002@gmail.com",
-        phoneNum: "+90 501 317 9633"
-    },
-    {
-        id: 4,
-        name: "Youssef Khaled",
-        email: "khaldy002@gmail.com",
-        phoneNum: "+90 501 317 9633"
-    },
-]
-function ContactsListPage() {
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAuth from "../hooks/useAuth";
 
-    const [openSettings, setOpenSettings] = useState(false)
-    const dispatch = useDispatch()
+function ContactsListPage() {
+    const {auth} = useAuth()
+    console.log(auth)
+    const axiosPrivate = useAxiosPrivate();
+    const [openSettings, setOpenSettings] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [componentName, setComponentName] = useState("");
+    const [modelData, setModelData] = useState({});
+    const [contacts, setContacts] = useState([]);  
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleAddNewContact = (componentName, data) => {
+        setIsOpen(!isOpen);
+        setComponentName(componentName);
+        setModelData(data);
+    };
+
+    // Fetch contacts
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        const getContacts = async () => {
+            try {
+                const response = await axiosPrivate.get("/contacts", {
+                    signal: controller.signal,
+                });
+                if (isMounted) {
+                    setContacts(response.data);
+                }
+            } catch (err) {
+                if (err.name !== 'CanceledError') {
+                    console.error("Failed to fetch contacts:", err);
+                    navigate("/login", { state: { from: location }, replace: true });
+                }
+            }
+        };
+        getContacts();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
+    }, [axiosPrivate, location, navigate]);
 
     return (
         <>
-            <Modal />
+            <Modal isOpen={isOpen} data={modelData} componentName={componentName} />
             <div className="contactsPage">
                 <div className="userInfo">
                     <div className="userName" onClick={() => setOpenSettings(!openSettings)}>
@@ -64,37 +76,33 @@ function ContactsListPage() {
                 <div className="contactsContainer">
                     <div className="search">
                         <div className="addAndSortContacts">
-                            <Link to="#"><IoPersonAddSharp onClick={() => dispatch(openModal({ componentName: "AddNewContact" }))} /></Link>
+                            <Link to="#"><IoPersonAddSharp onClick={() => handleAddNewContact("AddNewContact", "")} /></Link>
                             <Link to="#"><FaSortAmountUp /></Link>
                         </div>
                         <div className="searchBar">
                             <input type="text" name="searchForContact" id="search" placeholder="Search here.." />
                             <MdPersonSearch className="searchIcon" />
-
                         </div>
                     </div>
                     <div className="contactsList">
-                        {contacts.length > 0 ? contacts.map(contact => {
-                            return (
-                                <div className="contact-info" key={contact.id}>
-                                    <div className="info">
-                                        <h4 className="name">{contact.name}</h4>
-                                        <h4>{contact.email}</h4>
-                                        <h4>{contact.phoneNum}</h4>
-                                    </div>
-                                    <div className="buttons">
-                                        <FaEdit className="icon" onClick={() => dispatch(openModal({ componentName: "UpdateContact", data: contact }))} />
-                                        <FaTrashAlt className="icon" />
-                                    </div>
+                        {contacts.length > 0 ? contacts.map(contact => (
+                            <div className="contact-info" key={contact.id}>
+                                <div className="info">
+                                    <h4 className="name">{contact.name}</h4>
+                                    <h4>{contact.email}</h4>
+                                    <h4>{contact.phoneNum}</h4>
                                 </div>
-
-                            )
-                        }) : "no contacts to show"}
+                                <div className="buttons">
+                                    <FaEdit className="icon" onClick={() => handleAddNewContact("UpdateContact", contact)} />
+                                    <FaTrashAlt className="icon" />
+                                </div>
+                            </div>
+                        )) : "No contacts to show"}
                     </div>
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export default ContactsListPage
+export default ContactsListPage;

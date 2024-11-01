@@ -1,16 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AddNewContact from '../pages/AddNewContact'
 import UpdateContact from '../pages/UpdateContact'
 import "./modal.css"
 
-import { closeModal } from '../store/modal'
-import { useSelector, useDispatch } from "react-redux"
-
-function Modal() {
-    const dispatch = useDispatch()
 
 
-    const { isOpen, data, componentName } = useSelector(state => state.modal)
+function Modal({componentName,isOpen,data}) {
+
+    const [isopen,setIsOpen]=useState(isOpen)
 
     const components = { AddNewContact, UpdateContact }
     let renderedComponent;
@@ -23,9 +20,9 @@ function Modal() {
     }
     return (
 
-        <div className={isOpen ? '' : "hide"}>
+        <div className={isopen ? '' : "hide"}>
 
-            <div className="backdrop" onClick={() => dispatch(closeModal)} />
+            <div className="backdrop" onClick={() => setIsOpen(!isopen)} />
             <div className="modal" >
                 {renderedComponent}
             </div>

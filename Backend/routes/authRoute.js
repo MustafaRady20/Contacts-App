@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.route("/signUp").post(SignUp)
 router.route("/login").post(Login)
-router.route("/refresh").post(RefreshToken)
+router.route("/refresh").get(RefreshToken)
 
 
 module.exports = router

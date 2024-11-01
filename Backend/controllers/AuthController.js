@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 
 
 exports.SignUp = asyncHandler(async (req, res) => {
-    const { userName, email, password } = req.body
+    const {  email, password,userName } = req.body
     if (!userName || !password || !email) {
         return res.status(400).json({ "Messgae:": " userName , email or password is missing ...." })
     }
@@ -29,7 +29,9 @@ exports.SignUp = asyncHandler(async (req, res) => {
 
 exports.Login= asyncHandler(async(req,res,next)=>{
     const {email,password} = req.body
+    console.log(email,password)
     if(!email||!password) return res.status(400).json("email or password is missing try again..!")
+        
     const user = await UserModel.findOne({email:email}).exec()
     if(!user){
         return next(new ApiError("User Not found ..",401))
@@ -81,9 +83,9 @@ exports.RefreshToken = asyncHandler(async(req,res,next)=>{
     jwt.verify(refreshToken
         ,process.env.REFRESH_TOKEN_SECRET,
         (err,decoded)=>{
-        if(err||user.userName!==decoded.userName) return res.sendStatus(403)
+        if(err||user.email!==decoded.email) return res.sendStatus(403)
         const accessToken = jwt.sign({
-            "email":user.userName,
+            "email":user.email,
             "role":user.role
         },process.env.ACCESS_TOKEN_SECRET,{expiresIn:"15m"})
 

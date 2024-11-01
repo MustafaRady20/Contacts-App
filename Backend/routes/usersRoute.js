@@ -5,7 +5,7 @@ const router = express.Router()
 const { getAll } = require("../controllers/Users")
 
 
-router.route("/").get(getAll)
+router.route("/contacts").get(getAll)
 
 
 module.exports = router

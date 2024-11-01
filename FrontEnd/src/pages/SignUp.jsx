@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import axios from 'axios';
+import {  useNavigate } from "react-router-dom"
+import axios from "../api/axios";
 import { MdErrorOutline } from "react-icons/md";
 import { GrValidate } from "react-icons/gr";
 import { BiSolidShow } from "react-icons/bi";
@@ -61,29 +61,33 @@ function SignUp() {
     }
 
     const onSubmitForm = async (e) => {
-        e.preventDefault()
-
-        if (checkBoxValue && validEmail && validPass && validName && validMatch) {
-
-            const response = await axios.post("http://localhost:5000/api/contacts/", {
-                name: userName,
-                email,
-                password: pass,
-
-            })
-            console.log(response)
-
-
-        } else {
-            alert("Something went wrong...!")
+        e.preventDefault();
+        const sendData = {
+            userName,
+            email,
+            password:pass
         }
+        try {
+            if (checkBoxValue && validEmail && validPass && validName && validMatch) {
+                console.log("Sending Data:", sendData); // Log the data
+    
+                const response = await axios.post("/auth/signUp",sendData);
+                console.log("Server Response:", response);
+                if(response.status === 201){
+                    console.log("===============created")
+                    navigate("/login")
+                }
+            } else {
+                alert("Some fields are required ...!");
+            }
+        } catch (err) {
+            // Log more details from the error object to troubleshoot
+            console.log("Error:", err.response ? err.response.data : err.message);
+        }
+        
+    };
+    
 
-    }
-
-    useEffect(() => {
-        console.log(checkBoxValue)
-
-    }, [checkBoxValue])
     return (
         <div className='singup center'>
             <div className="container">

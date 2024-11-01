@@ -6,6 +6,7 @@ exports.getAll = asyncHandler( async (req,res) => {
     const limit = req.query.limit * 1 || 50
     const page = req.query.page *1 || 1
     const skip = (page -1)*limit
+    
     const users = await UserModel.find({}).skip(skip).limit(limit)
     if (!users){
         return new ApiError("No users found ...",404)

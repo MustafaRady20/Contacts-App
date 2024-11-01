@@ -7,7 +7,7 @@ function UpdateContact(props) {
                 <form >
                     <h2>Update Contact</h2>
                     <div className="name">
-                        <input type="text" name='contactName' id='contactName' placeholder='Full Name' value={props.data.name} />
+                        <input type="text" name='contactName' id='contactName' placeholder='Full Name' value={props.data.name} onChange={(e)=> e.target.value = e.target.value}/>
 
                     </div>
                     <div className="email">
